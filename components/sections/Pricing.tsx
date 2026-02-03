@@ -74,17 +74,24 @@ export default function Pricing() {
                                 ))}
                             </ul>
 
-                            <Link
-                                href="#contact"
+                            <button
+                                onClick={() => {
+                                    if (plan.name.toLowerCase().includes("team")) {
+                                        window.dispatchEvent(new CustomEvent("open-contact"));
+                                    } else {
+                                        const el = document.getElementById("features");
+                                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                                    }
+                                }}
                                 className={cn(
                                     "w-full py-4 rounded-xl text-center font-bold transition-all",
                                     plan.highlight
                                         ? "bg-primary text-background hover:bg-primary/90 hover:scale-105 shadow-lg shadow-primary/25"
-                                        : "bg-white/5 text-white hover:bg-white/10 border border-white/5"
+                                        : "bg-white/5 text-white hover:bg-white/10 border border-white/10"
                                 )}
                             >
                                 {plan.button}
-                            </Link>
+                            </button>
                         </div>
                     ))}
                 </div>

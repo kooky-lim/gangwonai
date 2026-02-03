@@ -23,13 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${outfit.variable} antialiased`}
-      >
+    <html lang="ko">
+      <body className={`${outfit.variable} font-sans antialiased`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] px-4 py-2 bg-primary text-background font-bold rounded-lg shadow-lg"
+        >
+          본문 바로가기
+        </a>
         <SmoothScroller />
         <Navbar />
-        {children}
+        <main id="main">
+          {children}
+        </main>
         <Footer />
         <ContactModal />
       </body>

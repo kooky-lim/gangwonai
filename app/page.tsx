@@ -10,7 +10,7 @@ import CTA from "@/components/sections/CTA";
 
 export default function Home() {
   return (
-    <main className="flex flex-col w-full overflow-hidden">
+    <div className="flex flex-col w-full overflow-hidden">
       <Hero />
       <Problem />
       <Solution />
@@ -20,6 +20,6 @@ export default function Home() {
       <Pricing />
       <FAQ />
       <CTA />
-    </main>
+    </div>
   );
 }

@@ -35,12 +35,12 @@ export default function Footer() {
                         <ul className="space-y-3">
                             {FOOTER_LINKS.map((link) => (
                                 <li key={link.name}>
-                                    <Link
-                                        href={link.href}
+                                    <a
+                                        href="mailto:contact@kangwon.ai"
                                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                                     >
                                         {link.name}
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>
@@ -48,9 +48,16 @@ export default function Footer() {
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-between border-t border-white/5 pt-8 gap-6">
-                    <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} Gangwon AI. All rights reserved.
-                    </p>
+                    <div className="flex flex-col gap-2">
+                        <p className="text-sm text-muted-foreground">
+                            © {new Date().getFullYear()} Gangwon AI. All rights reserved.
+                        </p>
+                        <noscript>
+                            <p className="text-xs text-primary/70">
+                                JavaScript가 비활성화되어 있습니다. 문의는 <a href="mailto:contact@kangwon.ai" className="underline">contact@kangwon.ai</a>로 부탁드립니다.
+                            </p>
+                        </noscript>
+                    </div>
                     <div className="flex items-center gap-6">
                         <Link href="#" className="text-muted-foreground hover:text-white transition-colors">
                             <Github className="w-5 h-5" />

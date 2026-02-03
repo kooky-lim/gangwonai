@@ -1,22 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, CheckCircle2, Loader2 } from "lucide-react";
 import { useUIStore } from "@/lib/store";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
-    company: z.string().min(1, "회사/기관명을 입력해주세요."),
-    name: z.string().min(1, "담당자명을 입력해주세요."),
-    email: z.string().email("올바른 이메일 주소를 입력해주세요."),
-    message: z.string().min(10, "문의 내용은 최소 10자 이상 입력해주세요."),
+    company: z.string().min(1, "회사/기관명을 입력해주세요.").max(50, "회사명은 50자 이내로 입력해주세요."),
+    name: z.string().min(1, "담당자명을 입력해주세요.").max(20, "담당자명은 20자 이내로 입력해주세요."),
+    email: z.string().email("올바른 이메일 주소를 입력해주세요.").max(100, "이메일은 100자 이내로 입력해주세요."),
+    message: z.string().min(10, "문의 내용은 최소 10자 이상 입력해주세요.").max(1000, "문의 내용은 1000자 이내로 입력해주세요."),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 export default function ContactModal() {
-    const { isContactOpen, closeContact } = useUIStore();
+    const { isContactOpen, closeContact, openContact } = useUIStore();
     const [formData, setFormData] = useState<FormData>({
         company: "",
         name: "",
@@ -26,6 +26,17 @@ export default function ContactModal() {
     const [errors, setErrors] = useState<Partial<FormData>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    useEffect(() => {
+        const handleOpen = () => {
+            setIsError(false);
+            setIsSuccess(false);
+            openContact();
+        };
+        window.addEventListener("open-contact", handleOpen);
+        return () => window.removeEventListener("open-contact", handleOpen);
+    }, [openContact]);
 
     if (!isContactOpen) return null;
 
@@ -123,6 +134,7 @@ export default function ContactModal() {
                                         )}
                                         placeholder="강원도청"
                                         required
+                                        maxLength={50}
                                     />
                                     {errors.company && <p className="text-xs text-danger">{errors.company}</p>}
                                 </div>
@@ -139,6 +151,7 @@ export default function ContactModal() {
                                         )}
                                         placeholder="홍길동"
                                         required
+                                        maxLength={20}
                                     />
                                     {errors.name && <p className="text-xs text-danger">{errors.name}</p>}
                                 </div>
@@ -158,6 +171,7 @@ export default function ContactModal() {
                                     )}
                                     placeholder="contact@kangwon.ai"
                                     required
+                                    maxLength={100}
                                 />
                                 {errors.email && <p className="text-xs text-danger">{errors.email}</p>}
                             </div>
@@ -177,6 +191,7 @@ export default function ContactModal() {
                                     placeholder="도입하고 싶은 서비스나 궁금한 점을 적어주세요."
                                     required
                                     minLength={10}
+                                    maxLength={1000}
                                 />
                                 {errors.message && <p className="text-xs text-danger">{errors.message}</p>}
                             </div>
