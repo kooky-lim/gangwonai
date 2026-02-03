@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "project": "AI Travel Planner Landing Site",
+    "date": "2026-02-03",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "A premium, responsive Next.js landing site for an AI-powered travel planning product that highlights benefits, features, pricing and enables business inquiries via a validated contact modal. The site emphasizes polished animations, smooth scrolling, and conversion-focused CTAs.",
+  "core_goals": [
+    "Communicate product value clearly and persuasively to drive sign-ups and business inquiries.",
+    "Deliver a high-performance, responsive, and accessible frontend using TypeScript and Tailwind CSS.",
+    "Provide an engaging, polished experience with smooth scrolling and animations (Lenis, GSAP) to showcase the app mockups and features.",
+    "Ensure reliable client-side form validation and state management for contact inquiries using Zod and Zustand.",
+    "Make content easy to maintain and testable with component-based structure and type-safe code."
+  ],
+  "key_features": [
+    "Sticky responsive Navbar with mobile hamburger menu and prominent contact inquiry CTA (components/layout/Navbar.tsx).",
+    "Hero section with animated app mockup, primary CTAs and entrance animations (components/sections/Hero.tsx).",
+    "Problem and Solution sections that explain travel planning pain points and present the AI-driven solution with a timeline mockup (components/sections/Problem.tsx, components/sections/Solution.tsx).",
+    "Features grid and a 3-step How It Works guide to explain core capabilities and workflow (components/sections/Features.tsx, components/sections/HowItWorks.tsx).",
+    "Pricing plans and accordion-style FAQ to support conversions and reduce friction (components/sections/Pricing.tsx, components/sections/FAQ.tsx).",
+    "Contact Modal form with client-side Zod validation and global state management via Zustand for open/close and submission flow (components/ui/ContactModal.tsx, lib/store.ts).",
+    "Global smooth scrolling behavior implemented with Lenis (components/layout/SmoothScroller.tsx).",
+    "Animations and scroll-triggered effects implemented using GSAP for polished transitions and mockup interactions.",
+    "Accessible, responsive layouts built with Tailwind CSS and type-safe components in TypeScript. Also uses Lucide React for icons and Zod for validation."
+  ],
+  "user_flow_summary": [
+    "Landing: Visitor arrives on homepage — Hero is prominent with animated mockup and two primary CTAs (e.g., Learn more, Contact).",
+    "Navigation: User uses sticky Navbar to jump to sections or opens mobile menu to navigate; contact inquiry CTA available in header.",
+    "Explore: User scrolls through Problem → Solution → Features → How It Works, experiencing scroll-triggered animations and timeline/mockup interactions.",
+    "Pricing & FAQ: User reviews subscription plans and expands accordion FAQ items for details and objections.",
+    "Contact Inquiry: User clicks Contact CTA (header or hero) — Contact Modal opens, user fills form, client-side Zod validation runs, state managed through Zustand. On successful validation the form triggers the configured submission flow (e.g., send to API endpoint or display success state).",
+    "Mobile Behavior: Full feature parity on mobile — hamburger toggles nav, modal and accordions are touch-friendly, smooth scroll behavior degrades gracefully if unsupported."
+  ],
+  "validation_criteria": [
+    "Component presence: All listed components exist and import correctly (Navbar, Hero, Problem, Solution, Features, HowItWorks, Pricing, FAQ, ContactModal, SmoothScroller).",
+    "Responsiveness: Layouts and components render correctly across breakpoints (mobile, tablet, desktop) — visual QA and responsive snapshot tests pass.",
+    "Accessibility: Semantic HTML, proper ARIA attributes for interactive components (hamburger, modal, accordion), and keyboard operability verified (axe-core or equivalent audit).",
+    "Form validation: ContactModal enforces Zod schema rules; invalid inputs display clear inline errors and valid submissions clear errors and change to success state. Unit tests cover the schema and form component behaviors.",
+    "Global state: Zustand store toggles modal state predictably; state transitions covered by unit tests and manual QA.",
+    "Smooth scrolling & animations: Lenis-driven scroll behavior is smooth and non-janky on modern browsers; GSAP animations trigger at expected scroll positions. Performance testing ensures animations do not cause jank (frame drops within acceptable thresholds).",
+    "Navigation & mobile menu: Hamburger opens/closes menu reliably and navigation links scroll to anchors; mobile menu accessibility and focus management pass manual tests.",
+    "Pricing & FAQ interactions: Accordion entries expand/collapse with animation and maintain content visibility for screen readers. Pricing cards render and CTA buttons are clickable with correct targets.",
+    "Performance budgets: Core Web Vitals within acceptable thresholds for a marketing landing page (LCP, FID/INP, CLS goals — team to define exact thresholds).",
+    "E2E flows: Critical user journeys (navigate to hero, open contact modal, submit form with valid data) pass end-to-end tests (Playwright/Cypress).",
+    "Type safety & linting: TypeScript compile passes with no errors; code meets linting and formatting rules.",
+    "Deployment readiness: Build succeeds in CI, no blocking TypeScript errors, and preview deployment demonstrates all visual and interactive features."
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Lenis",
+      "Lucide React",
+      "Zustand",
+      "Zod"
+    ],
+    "features": [
+      {
+        "name": "Navbar",
+        "description": "Sticky navigation header with mobile hamburger menu and contact inquiry button.",
+        "files": [
+          "components/layout/Navbar.tsx"
+        ]
+      },
+      {
+        "name": "Hero",
+        "description": "Premium landing section with animated app mockup and primary CTAs.",
+        "files": [
+          "components/sections/Hero.tsx"
+        ]
+      },
+      {
+        "name": "Problem & Solution",
+        "description": "Sections explaining travel planning pain points and the AI-driven solution with a timeline mockup.",
+        "files": [
+          "components/sections/Problem.tsx",
+          "components/sections/Solution.tsx"
+        ]
+      },
+      {
+        "name": "Features & How It Works",
+        "description": "Grid of services and a 3-step process guide.",
+        "files": [
+          "components/sections/Features.tsx",
+          "components/sections/HowItWorks.tsx"
+        ]
+      },
+      {
+        "name": "Pricing & FAQ",
+        "description": "Subscription plans and an accordion-style FAQ section.",
+        "files": [
+          "components/sections/Pricing.tsx",
+          "components/sections/FAQ.tsx"
+        ]
+      },
+      {
+        "name": "Contact Modal",
+        "description": "Form with Zod validation for business inquiries, managed by global Zustand store.",
+        "files": [
+          "components/ui/ContactModal.tsx",
+          "lib/store.ts"
+        ]
+      },
+      {
+        "name": "Smooth Scroll",
+        "description": "Global smooth scrolling behavior using Lenis.",
+        "files": [
+          "components/layout/SmoothScroller.tsx"
+        ]
+      }
+    ]
+  }
+}

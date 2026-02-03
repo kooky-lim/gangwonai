@@ -25,6 +25,8 @@ export default function FAQ() {
                                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                                 className="flex items-center justify-between w-full p-6 text-left"
                                 aria-expanded={openIndex === idx}
+                                aria-controls={`faq-panel-${idx}`}
+                                id={`faq-btn-${idx}`}
                             >
                                 <span className="text-lg font-medium text-white">{item.q}</span>
                                 <ChevronDown
@@ -36,10 +38,14 @@ export default function FAQ() {
                             </button>
 
                             <div
+                                id={`faq-panel-${idx}`}
+                                role="region"
+                                aria-labelledby={`faq-btn-${idx}`}
                                 className={cn(
                                     "overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out",
                                     openIndex === idx ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
                                 )}
+                                aria-hidden={openIndex !== idx}
                             >
                                 <div className="p-6 pt-0 text-muted-foreground leading-relaxed">
                                     {item.a}

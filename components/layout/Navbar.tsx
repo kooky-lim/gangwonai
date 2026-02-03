@@ -55,9 +55,11 @@ export default function Navbar() {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden text-white"
+                    className="md:hidden text-white p-2"
                     onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Toggle menu"
+                    aria-label={isOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isOpen}
+                    aria-controls="mobile-menu"
                 >
                     {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
@@ -65,7 +67,10 @@ export default function Navbar() {
 
             {/* Mobile Nav */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 right-0 h-screen bg-background/95 backdrop-blur-xl p-6 flex flex-col gap-6 animate-in slide-in-from-top-2 border-t border-white/10">
+                <div
+                    id="mobile-menu"
+                    className="md:hidden absolute top-full left-0 right-0 h-screen bg-background/95 backdrop-blur-xl p-6 flex flex-col gap-6 animate-in slide-in-from-top-2 border-t border-white/10"
+                >
                     {NAV_ITEMS.map((item) => (
                         <Link
                             key={item.name}

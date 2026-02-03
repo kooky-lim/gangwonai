@@ -1,0 +1,532 @@
+[
+  {
+    "id": "TC001",
+    "title": "Component presence and imports",
+    "description": "Verify that all required components exist, export correctly, and can be imported without TypeScript errors: Navbar, Hero, Problem, Solution, Features, HowItWorks, Pricing, FAQ, ContactModal, SmoothScroller, and lib/store.",
+    "category": "build",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run a TypeScript compile (tsc --noEmit) in the project root."
+      },
+      {
+        "type": "assertion",
+        "description": "Compilation completes with zero type errors."
+      },
+      {
+        "type": "action",
+        "description": "In a test harness file, import each component and the zustand store: components/layout/Navbar.tsx, components/sections/Hero.tsx, components/sections/Problem.tsx, components/sections/Solution.tsx, components/sections/Features.tsx, components/sections/HowItWorks.tsx, components/sections/Pricing.tsx, components/sections/FAQ.tsx, components/ui/ContactModal.tsx, components/layout/SmoothScroller.tsx, lib/store.ts."
+      },
+      {
+        "type": "assertion",
+        "description": "All imports resolve without runtime errors in a dev server (next dev) and type errors are not reported."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Navbar sticky behavior and visibility across breakpoints",
+    "description": "Verify the Navbar remains sticky at the top and displays expected elements across mobile, tablet, and desktop viewports.",
+    "category": "ui",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the landing page in desktop (>= 1280px), tablet (768-1023px), and mobile (<= 375px) viewports."
+      },
+      {
+        "type": "assertion",
+        "description": "Navbar is fixed/sticky at the top and visible after scrolling on all viewports."
+      },
+      {
+        "type": "assertion",
+        "description": "Contact CTA button is visible in desktop and tablet header; on mobile, hamburger icon is visible and contact CTA accessible inside mobile menu."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Mobile hamburger menu open/close and focus management",
+    "description": "Ensure the hamburger toggles the mobile nav, focus shifts appropriately, ESC closes menu, and aria attributes reflect state.",
+    "category": "accessibility",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Set viewport to mobile size and navigate to the homepage."
+      },
+      {
+        "type": "action",
+        "description": "Activate the hamburger button (click or keyboard Enter)."
+      },
+      {
+        "type": "assertion",
+        "description": "Mobile menu panel becomes visible, hamburger button aria-expanded attribute updates to true, and focus moves into the first interactive item in the menu."
+      },
+      {
+        "type": "action",
+        "description": "Press Tab to cycle through menu items and then press Escape."
+      },
+      {
+        "type": "assertion",
+        "description": "Menu closes, hamburger aria-expanded returns to false, and focus returns to the hamburger button."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Hero CTAs and anchor navigation",
+    "description": "Verify primary CTAs in the Hero navigate to correct anchors and the animated mockup is present.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load the landing page and locate Hero section CTAs (e.g., Learn more, Contact)."
+      },
+      {
+        "type": "action",
+        "description": "Click 'Learn more'—expect smooth scroll to Features/HowItWorks section."
+      },
+      {
+        "type": "assertion",
+        "description": "Page scrolls to the expected section and the URL hash (if used) or visible heading corresponds to the target."
+      },
+      {
+        "type": "action",
+        "description": "Click 'Contact' CTA in hero."
+      },
+      {
+        "type": "assertion",
+        "description": "Contact Modal opens and the animated app mockup remains visible; hero entrance animations triggered on initial load are complete without breaking layout."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Smooth scrolling behavior (Lenis) on supported browsers",
+    "description": "Verify Lenis-driven smooth scrolling provides smooth transitions and scroll-triggered animations fire at expected positions on a modern browser.",
+    "category": "performance",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the site on a modern desktop browser and scroll slowly from top to bottom using the mouse wheel and keyboard arrow/PageDown keys."
+      },
+      {
+        "type": "assertion",
+        "description": "Scroll motion appears smooth, no jank or stutter noted during normal navigation, and scroll-linked animations trigger when their sections enter the viewport."
+      },
+      {
+        "type": "action",
+        "description": "Programmatically jump to an anchor link and observe behavior."
+      },
+      {
+        "type": "assertion",
+        "description": "Anchor navigation is smooth and lands at the correct section; no content is obscured by the sticky navbar."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Smooth scrolling graceful degradation (reduced-motion or JS disabled)",
+    "description": "Verify that when smooth-scrolling is unavailable (reduced-motion preference or disabled JS), navigation still functions and content remains accessible.",
+    "category": "accessibility",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate user-agent reduced-motion: set prefers-reduced-motion to reduce and reload page."
+      },
+      {
+        "type": "assertion",
+        "description": "Scrolling behavior respects reduced-motion (animations reduced or disabled) while content remains reachable and readable."
+      },
+      {
+        "type": "action",
+        "description": "Disable JavaScript in the browser and reload the page."
+      },
+      {
+        "type": "assertion",
+        "description": "Anchor links still navigate to content (non-JS fallback) and the mobile menu and modal degrade gracefully (modal may open as a new page or fallback UI); page remains usable."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "GSAP scroll-triggered animations fire correctly",
+    "description": "Verify GSAP animations for section entrances and mockup interactions trigger at intended scroll positions and do not cause layout shifts.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the site on desktop and scroll to each section (Hero, Problem, Solution, Features, How It Works, Pricing, FAQ) slowly and also jump to anchors."
+      },
+      {
+        "type": "assertion",
+        "description": "Each GSAP animation starts when its trigger enters the viewport and completes; animated elements end in expected final positions and do not overlap other content."
+      },
+      {
+        "type": "assertion",
+        "description": "No unexpected cumulative layout shift (CLS) events caused by animation start/finish positions."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Contact Modal opening/closing via Zustand store",
+    "description": "Verify global Zustand store controls opening and closing of Contact Modal predictably from header CTA, hero CTA, and programmatic store changes.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "From the page, click the header contact CTA to open modal."
+      },
+      {
+        "type": "assertion",
+        "description": "Modal opens and store state indicates open (verify via unit test or exposing store getter in test environment)."
+      },
+      {
+        "type": "action",
+        "description": "Close the modal using the close button and then open it via the hero CTA."
+      },
+      {
+        "type": "assertion",
+        "description": "Modal toggles accordingly and store state reflects the current visibility consistently."
+      },
+      {
+        "type": "action",
+        "description": "Programmatically set store state (in test) to open and then to closed."
+      },
+      {
+        "type": "assertion",
+        "description": "Modal UI updates match the programmatic state changes."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Contact Modal keyboard accessibility and ARIA",
+    "description": "Ensure the Contact Modal is keyboard operable, focus-trapped when open, ESC closes it, and ARIA attributes (role, aria-modal, aria-labelledby) are set.",
+    "category": "accessibility",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the Contact Modal via CTA."
+      },
+      {
+        "type": "assertion",
+        "description": "Focus is trapped inside the modal; Tab cycles through inputs and buttons without moving to background page controls."
+      },
+      {
+        "type": "action",
+        "description": "Press Escape key."
+      },
+      {
+        "type": "assertion",
+        "description": "Modal closes and focus returns to the element that triggered it; modal element has role='dialog' (or equivalent) and aria-modal='true' and an aria-labelledby referencing the modal title."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Contact Modal Zod validation - required fields",
+    "description": "Verify client-side Zod schema enforces required fields and displays inline error messages for missing required values.",
+    "category": "unit",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open Contact Modal and submit the form with all required fields empty."
+      },
+      {
+        "type": "assertion",
+        "description": "Zod validation runs client-side and shows inline error messages for each required field; form is not submitted to the backend."
+      },
+      {
+        "type": "action",
+        "description": "Run unit tests directly against the Zod schema with an input object missing required properties."
+      },
+      {
+        "type": "assertion",
+        "description": "Schema.validate or parse returns expected failure with error details for each missing key."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Contact Modal Zod validation - invalid email and field constraints",
+    "description": "Verify Zod enforces email format, maximum lengths, and other constraints; invalid inputs show helpful messages.",
+    "category": "unit",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Enter an invalid email (e.g., 'user@@example' or 'plainstring') and fill other required fields validly, then submit."
+      },
+      {
+        "type": "assertion",
+        "description": "Inline error message indicates invalid email format and prevents submission."
+      },
+      {
+        "type": "action",
+        "description": "Enter excessively long strings for text fields (beyond expected max) and submit."
+      },
+      {
+        "type": "assertion",
+        "description": "Validation fails with messages about length constraints and input is not accepted."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Contact Modal XSS and input sanitization (client-side checks)",
+    "description": "Ensure form input is not rendered in a way that allows script execution and that client-side displays escape potentially dangerous input.",
+    "category": "security",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "In a test environment, input a script-like string into a free-text field (e.g., '<script>alert(1)</script>') and submit (without sending to real backend)."
+      },
+      {
+        "type": "assertion",
+        "description": "The app displays the value as escaped text in any client-side success/preview and does not execute scripts; no inline script tags are injected into the DOM."
+      },
+      {
+        "type": "action",
+        "description": "Run automated DOM inspection for innerHTML usage on client rendering paths of user-supplied values."
+      },
+      {
+        "type": "assertion",
+        "description": "No unsafe innerHTML with unsanitized user content is used by the Contact Modal component."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Contact Modal submission success and UI state transitions",
+    "description": "Verify valid form submission triggers the expected success state, clears errors, and allows retry or further action; handle mocked API success path.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open Contact Modal, fill in valid form values, and submit. Mock or stub the API endpoint to return success (200)."
+      },
+      {
+        "type": "assertion",
+        "description": "Form submission triggers success UI (toast/success screen), inline errors are cleared, submit button is disabled during request and re-enabled or replaced with 'Sent' state after success."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to open modal again and submit a different valid payload."
+      },
+      {
+        "type": "assertion",
+        "description": "Modal accepts new submission and shows appropriate state transitions again."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Contact Modal submission failure handling (server error)",
+    "description": "Verify UI shows an appropriate error message and allows retry when API returns error or network fails.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open Contact Modal, fill valid data, submit while mocking API to return 500 or network timeout."
+      },
+      {
+        "type": "assertion",
+        "description": "UI displays a clear error message describing the failure, submit button becomes re-enabled for retry, and error is logged to console (in debug builds) or surfaced to monitoring hooks."
+      },
+      {
+        "type": "action",
+        "description": "Retry submission and mock a successful response on retry."
+      },
+      {
+        "type": "assertion",
+        "description": "Successful retry transitions to success UI and clears error messages."
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Pricing cards CTA and content rendering",
+    "description": "Verify pricing cards render with correct content, price, feature list, and CTA buttons that trigger expected navigation or modal open.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Scroll to Pricing section and inspect each pricing card's displayed plan name, price, key features, and CTA button."
+      },
+      {
+        "type": "assertion",
+        "description": "Each pricing card displays expected content and CTA is keyboard-focusable and clickable."
+      },
+      {
+        "type": "action",
+        "description": "Click primary CTA on a pricing card (e.g., 'Contact Sales' or 'Get Started')."
+      },
+      {
+        "type": "assertion",
+        "description": "Action triggers expected behavior: either navigates to sign-up/checkout anchor or opens contact modal if configured."
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "FAQ accordion expand/collapse and accessibility",
+    "description": "Ensure accordion entries expand/collapse with animation, maintain correct ARIA attributes (aria-expanded, aria-controls), and content is available to screen readers.",
+    "category": "accessibility",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to FAQ section and interact with each accordion header via mouse click and keyboard (Enter/Space)."
+      },
+      {
+        "type": "assertion",
+        "description": "When opened, aria-expanded is true, the content region is revealed and has aria-hidden=false (or appropriate), focus remains on the header unless explicitly moved, and the animated expansion completes without clipping content."
+      },
+      {
+        "type": "action",
+        "description": "Use a screen reader to read an FAQ entry and confirm it reads header and content when expanded."
+      },
+      {
+        "type": "assertion",
+        "description": "Screen reader announces the header and content appropriately and announcements update on expand/collapse."
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Features grid and How It Works content responsiveness",
+    "description": "Verify Features grid and 3-step How It Works guide maintain readability and layout across breakpoints and on narrow viewports do not overflow horizontally.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the Features and HowItWorks sections on desktop, tablet, and mobile viewports and rotate orientation (portrait/landscape) for mobile."
+      },
+      {
+        "type": "assertion",
+        "description": "Grid reflows appropriately (e.g., 3-column -> 1-column), icons and text scale via Tailwind utilities, and no horizontal scrollbars appear."
+      },
+      {
+        "type": "action",
+        "description": "Simulate long localized strings for headings and descriptions using test content."
+      },
+      {
+        "type": "assertion",
+        "description": "UI accommodates longer content without breaking layout or truncating important information unexpectedly."
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Keyboard navigation across the page and skip-to-content",
+    "description": "Ensure full keyboard navigation flow: skip links (if present), tab order, focus indicators visible, and interactive elements reachable in logical order.",
+    "category": "accessibility",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load page and press Tab repeatedly from the top to move through interactive elements."
+      },
+      {
+        "type": "assertion",
+        "description": "Focus moves in a logical order: skip link (if present) -> navbar items -> hero CTAs -> section links -> footer; focus indicators are visible for all interactive elements."
+      },
+      {
+        "type": "action",
+        "description": "Activate skip-to-content link (if implemented)."
+      },
+      {
+        "type": "assertion",
+        "description": "Focus moves directly to main content area and the element receives focus as expected."
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Performance audit for Core Web Vitals baseline",
+    "description": "Run Lighthouse or automated performance analysis to capture LCP, INP/FID, and CLS and ensure they meet defined performance budgets for a marketing landing page.",
+    "category": "performance",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run Lighthouse (or CI-based lab test) on the landing page in simulated mobile and desktop throttled conditions and collect LCP, INP/FID, and CLS scores."
+      },
+      {
+        "type": "assertion",
+        "description": "Report generated contains Core Web Vitals metrics; each metric falls within acceptable thresholds defined by the team (e.g., LCP < 2.5s desktop lab baseline, CLS < 0.1). If thresholds are exceeded, document remediation items."
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "E2E flow: open Contact Modal, submit valid data, and confirm submission path",
+    "description": "End-to-end test that simulates a real user opening the modal from header, filling valid data, and asserting the mocked backend receives the request and UI shows success.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Start E2E runner (Playwright/Cypress), navigate to landing page, click header Contact CTA to open modal."
+      },
+      {
+        "type": "action",
+        "description": "Fill required fields with valid test data and submit. Intercept network call to the configured API endpoint and assert payload matches expected schema."
+      },
+      {
+        "type": "assertion",
+        "description": "API call is made with correct JSON body, UI shows a success state, and modal closes or transitions to success UI per implementation."
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Unit tests: Zustand store transitions and selectors",
+    "description": "Unit test the Zustand store functions for toggling modal state and retrieving modal visibility and submission status.",
+    "category": "unit",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "In unit test environment, import lib/store and call actions to openModal(), closeModal(), setSubmitting(true/false), and resetState()."
+      },
+      {
+        "type": "assertion",
+        "description": "Store state updates synchronously/transactionally as expected: isOpen toggles, isSubmitting toggles, and subscribers receive updates; selectors return correct values."
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "CI build and lint pipeline verification",
+    "description": "Ensure the project builds successfully in CI, linter and formatter checks pass, and no TypeScript errors block deployment.",
+    "category": "build",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run CI pipeline steps locally: npm ci, npm run build (Next.js production build), npm run lint, and npm run type-check (if separate)."
+      },
+      {
+        "type": "assertion",
+        "description": "Build completes successfully, lint reports zero errors (or only allowed warnings), and type-check passes with no errors. Artifacts are produced for preview deployment."
+      }
+    ]
+  }
+]

@@ -1,0 +1,67 @@
+{
+    "tech_stack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "GSAP",
+        "Lenis",
+        "Lucide React",
+        "Zustand",
+        "Zod"
+    ],
+    "features": [
+        {
+            "name": "Navbar",
+            "description": "Sticky navigation header with mobile hamburger menu and contact inquiry button.",
+            "files": [
+                "components/layout/Navbar.tsx"
+            ]
+        },
+        {
+            "name": "Hero",
+            "description": "Premium landing section with animated app mockup and primary CTAs.",
+            "files": [
+                "components/sections/Hero.tsx"
+            ]
+        },
+        {
+            "name": "Problem & Solution",
+            "description": "Sections explaining travel planning pain points and the AI-driven solution with a timeline mockup.",
+            "files": [
+                "components/sections/Problem.tsx",
+                "components/sections/Solution.tsx"
+            ]
+        },
+        {
+            "name": "Features & How It Works",
+            "description": "Grid of services and a 3-step process guide.",
+            "files": [
+                "components/sections/Features.tsx",
+                "components/sections/HowItWorks.tsx"
+            ]
+        },
+        {
+            "name": "Pricing & FAQ",
+            "description": "Subscription plans and an accordion-style FAQ section.",
+            "files": [
+                "components/sections/Pricing.tsx",
+                "components/sections/FAQ.tsx"
+            ]
+        },
+        {
+            "name": "Contact Modal",
+            "description": "Form with Zod validation for business inquiries, managed by global Zustand store.",
+            "files": [
+                "components/ui/ContactModal.tsx",
+                "lib/store.ts"
+            ]
+        },
+        {
+            "name": "Smooth Scroll",
+            "description": "Global smooth scrolling behavior using Lenis.",
+            "files": [
+                "components/layout/SmoothScroller.tsx"
+            ]
+        }
+    ]
+}

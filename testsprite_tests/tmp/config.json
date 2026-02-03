@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "landing-page",
+    "projectPath": "/Users/kooky/Documents/개인사업/강의/강원대 e루리/Coding/landing-page",
+    "testIds": [],
+    "additionalInstruction": "Test the landing page sections visibility, mobile menu toggle, and contact modal form validation.",
+    "envs": {
+      "API_KEY": "sk-user-5EhjCESVbv3X6_gcobvGVSz55SyvK5cY5eVhkkpJawiVwj-dVkTfXyo1j30Adah_NuakZZIdW85efHP98qcXynjO3bs9MM27RxwSzRk-zqjrLtnNSCJUzab0A89AMhWaM58"
+    }
+  },
+  "serverPort": 50991,
+  "proxy": "http://84566927-5d6d-4912-a2da-534c5b4f5d08:lASdhsS0AgRovPpyhe7BodZ4K4VE4Y9u@tun.testsprite.com:8080"
+}

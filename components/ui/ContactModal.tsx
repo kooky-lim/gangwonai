@@ -65,7 +65,12 @@ export default function ContactModal() {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
             <div
                 className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                 onClick={closeContact}
@@ -75,6 +80,7 @@ export default function ContactModal() {
                 <button
                     onClick={closeContact}
                     className="absolute top-4 right-4 text-muted-foreground hover:text-white transition-colors"
+                    aria-label="모달 닫기"
                 >
                     <X className="w-6 h-6" />
                 </button>
@@ -84,7 +90,7 @@ export default function ContactModal() {
                         <div className="w-16 h-16 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 animate-in zoom-in">
                             <CheckCircle2 className="w-8 h-8" />
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">문의가 접수되었습니다!</h3>
+                        <h3 id="modal-title" className="text-2xl font-bold text-white mb-2">문의가 접수되었습니다!</h3>
                         <p className="text-muted-foreground mb-8">
                             담당자가 확인 후 입력하신 이메일로<br />빠르게 연락드리겠습니다.
                         </p>
@@ -97,7 +103,7 @@ export default function ContactModal() {
                     </div>
                 ) : (
                     <>
-                        <h2 className="text-2xl font-bold text-white mb-2">도입 문의</h2>
+                        <h2 id="modal-title" className="text-2xl font-bold text-white mb-2">도입 문의</h2>
                         <p className="text-muted-foreground mb-8 text-sm">
                             강원 AI 도입을 위한 상담을 도와드립니다.
                         </p>
@@ -105,8 +111,9 @@ export default function ContactModal() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-muted-foreground">회사/기관명</label>
+                                    <label htmlFor="company" className="text-xs font-medium text-muted-foreground">회사/기관명</label>
                                     <input
+                                        id="company"
                                         name="company"
                                         value={formData.company}
                                         onChange={handleChange}
@@ -115,12 +122,14 @@ export default function ContactModal() {
                                             errors.company ? "border-danger/50" : "border-white/10 focus:border-primary"
                                         )}
                                         placeholder="강원도청"
+                                        required
                                     />
                                     {errors.company && <p className="text-xs text-danger">{errors.company}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-muted-foreground">담당자명</label>
+                                    <label htmlFor="name" className="text-xs font-medium text-muted-foreground">담당자명</label>
                                     <input
+                                        id="name"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
@@ -129,14 +138,17 @@ export default function ContactModal() {
                                             errors.name ? "border-danger/50" : "border-white/10 focus:border-primary"
                                         )}
                                         placeholder="홍길동"
+                                        required
                                     />
                                     {errors.name && <p className="text-xs text-danger">{errors.name}</p>}
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-muted-foreground">이메일</label>
+                                <label htmlFor="email" className="text-xs font-medium text-muted-foreground">이메일</label>
                                 <input
+                                    id="email"
+                                    type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
@@ -145,13 +157,15 @@ export default function ContactModal() {
                                         errors.email ? "border-danger/50" : "border-white/10 focus:border-primary"
                                     )}
                                     placeholder="contact@kangwon.ai"
+                                    required
                                 />
                                 {errors.email && <p className="text-xs text-danger">{errors.email}</p>}
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-muted-foreground">문의 내용</label>
+                                <label htmlFor="message" className="text-xs font-medium text-muted-foreground">문의 내용</label>
                                 <textarea
+                                    id="message"
                                     name="message"
                                     value={formData.message}
                                     onChange={handleChange}
@@ -161,6 +175,8 @@ export default function ContactModal() {
                                         errors.message ? "border-danger/50" : "border-white/10 focus:border-primary"
                                     )}
                                     placeholder="도입하고 싶은 서비스나 궁금한 점을 적어주세요."
+                                    required
+                                    minLength={10}
                                 />
                                 {errors.message && <p className="text-xs text-danger">{errors.message}</p>}
                             </div>
